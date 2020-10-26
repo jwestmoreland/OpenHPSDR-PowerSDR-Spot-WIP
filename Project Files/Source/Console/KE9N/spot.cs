@@ -8370,12 +8370,14 @@ namespace PowerSDR
             // SET MODE, THEN 
             if (WWVPitch == false)
             {
-                console.RX1DSPMode = DSPMode.DIGU;
+	    console.RX1DSPMode = DSPMode.CWU;
+///	    console.RX1DSPMode = DSPMode.DIGU;
                 beacon89a = console.RX1Filter;           // get filter name so you can restore
 
                 console.RX1Filter = Filter.VAR1;
 
-                console.UpdateRX1Filters(-30, 30);
+///		console.UpdateRX1Filters(-30, 30);
+		console.UpdateRX1Filters(-150, 150);
 
                 textBox1.Text += "Signal Strength detection. Waiting for Start of Minute!\r\n";
 
@@ -8393,12 +8395,14 @@ namespace PowerSDR
               //  console.CATPreamp = PreampMode.OFF;
 
 ///		console.RX1DSPMode = DSPMode.USB;
+//		console.RX1DSPMode = DSPMode.DIGU;
 		console.RX1DSPMode = DSPMode.AM;
                 beacon89a = console.RX1Filter;           // get filter name so you can restore
 
                 console.RX1Filter = Filter.VAR1;
 
-                console.UpdateRX1Filters(70, 170);
+///		console.UpdateRX1Filters(70, 170);
+		console.UpdateRX1Filters(-30, 2500);
 
                 textBox1.Text += "Tone detection. Waiting for Start of Minute!\r\n";
 

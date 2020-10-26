@@ -65,7 +65,6 @@ namespace PowerSDR
     using System.Xml.Linq;
     using System.Timers;
 
-
     #region Enums
 
     public enum FocusMasterMode
@@ -547,6 +546,87 @@ namespace PowerSDR
 
     unsafe public class Console : System.Windows.Forms.Form
     {
+
+
+	//==================================================================================
+	//==================================================================================
+	// ke9ns add (copied from cwx precision multimedia msec timer)
+	//       everything below
+
+#region Win32 Multimedia Timer Functions
+
+	//  private int tel;            // time of one element in ms
+
+	// Represents the method that is called by Windows when a timer event occurs.
+    private delegate void TimeProc(int id, int msg, int user, int param1, int param2);
+
+	// Specifies constants for multimedia timer event types.
+
+    public enum TimerMode
+    {
+	    OneShot,    // Timer event occurs once.
+	    Periodic    // Timer event occurs periodically.
+    };
+
+	// Represents information about the timer's capabilities.
+    [StructLayout(LayoutKind.Sequential)]
+    public struct TimerCaps
+    {
+	    public int periodMin;   // Minimum supported period in milliseconds.
+	    public int periodMax;   // Maximum supported period in milliseconds.
+    }
+
+	// Gets timer capabilities.
+    [DllImport("winmm.dll")]
+    private static extern int timeGetDevCaps(ref TimerCaps caps, int sizeOfTimerCaps);
+
+	// Creates and starts the timer.
+    [DllImport("winmm.dll")]
+    private static extern int timeSetEvent(int delay, int resolution, TimeProc proc, int user, int mode);
+
+
+	// Stops and destroys the timer.
+    [DllImport("winmm.dll")]
+    private static extern int timeKillEvent(int id);
+
+	// Indicates that the operation was successful.
+    private const int TIMERR_NOERROR = 0;
+
+	// Timer identifier.
+       // private int timerID;
+
+       // private TimeProc timeProcPeriodic;   // ke9ns add to use windows based multimedia timer
+
+					     // SpeechSynthesizer speaker = new SpeechSynthesizer(); // ke9ns add 
+
+					     // HidDevice.PowerMate powerMate = new HidDevice.PowerMate();  // ke9ns add link back to PowerMate.cpp and PowerMate.h
+
+    public int KBON = 0; // ke9ns add 1=knob present 0=knob not present
+    public int speed = 0; // ke9ns add speed of knob freq change
+    public int lastvalue = 0; // ke9ns add knob
+
+    public CheckBoxTS chkRX1MUTE;  // ke9ns add allow RX1 mute of flex radio audio but not vac stream audio
+	//  private Label label2;    // ke9ns add label for chkrx1mute
+
+
+       // private TextBoxTS txtNOAA2;    // ke9ns add for space weather on main console screen
+       // private TextBoxTS txtNOAA;    // ke9ns add for space weather on main console screen
+	//  private LabelTS labelTS2;
+	//  private LabelTS labelTS1;
+	//   public NumericUpDownTS udTXFilterLow;
+	// public NumericUpDownTS udTXFilterHigh;
+    public CheckBoxTS chkBoxMuteSpk;
+    public CheckBoxTS chkBoxDrive;
+	//  private LabelTS labelTS5;
+
+	//   Stopwatch WATCH1 = new Stopwatch();
+	//    Stopwatch WATCH2 = new Stopwatch();
+
+
+#endregion
+
+
+	    
         #region Variable Declarations
         // ======================================================
         // Variable Declarations

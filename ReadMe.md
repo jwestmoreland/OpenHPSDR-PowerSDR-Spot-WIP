@@ -3,18 +3,19 @@
 Latest Test Release v3.6.0 Oct. 26, 2020
 
 # 3.6.0 (2020-10-26)
+- Debug version of 'Spot' feature developed by KE9NS:  
 
-Debug version of 'Spot' feature developed by KE9NS:  
-Main reason currently adding this is for the WWV(B/H) capability to sync the PC's clock via
-tuning to WWV(B/H) - not sure if WWVB currently works but I'm planning on adding it if it
-isn't there already.  Note, some items are stubbed as the time sync feature was my main
-reason for doing this plus having something that runs on the Atlas-Bus based OpenHPSDR rigs.
-The 'spot' menu is 'hidden' - not on purpose - it's just where this is right now - between
-the Collapse and RA items on the main menu bar.  If you get an exception, just hit continue -
-that's one of the current side-effects of me stubbing out come code (that I will fix as
-time permits hopefully).
+- Main reason currently adding this is for the WWV(B/H) capability to sync the PC's clock via
+- tuning to WWV(B/H) - WWVB tuning has been added (option 5 currently) but needs work still.
+- Setting PC Clock via Internet seems to be working - but needs verification to be sure.
+- Note, some items are stubbed as the time sync feature was my main
+- reason for doing this plus having something that runs on the Atlas-Bus based OpenHPSDR rigs.
+- The 'spot' menu is 'hidden' - not on purpose - it's just where this is right now - between
+- the Collapse and RA items on the main menu bar.  If you get an exception, just hit continue -
+- that's one of the current side-effects of me stubbing out code (that I will fix as
+- time permits hopefully).
 
-Read the RealeaseNotes.md for more information.
+ -> Read the ReleaseNotes.md for more information.
 
 # 3.4.9 (2018-3-19)
 - Bug fix for manually entering frequency
@@ -52,7 +53,7 @@ Read the RealeaseNotes.md for more information.
 - Added MIDI CAT support for the Behringer CMD Studio 2a
 - Added support for the ANAN-7000DLE transceiver
 - Added feature to select between receive or transmit antenna for receiving
-- Use of seperate TX Profiles for various modes. 
+- Use of separate TX Profiles for various modes. 
   - LSB, USB, DSB, CWL, CWU, SPEC, & DRM 
   - FM
   - AM & SAM 
