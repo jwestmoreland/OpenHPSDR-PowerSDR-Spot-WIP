@@ -1,6 +1,18 @@
 # OpenHPSDR-PowerSDR
 
-Latest Release v3.4.9 March 19, 2018
+Latest Test Release v3.6.0 Oct. 26, 2020
+
+# 3.6.0 (2020-10-26)
+
+Debug version of 'Spot' feature developed by KE9NS.  
+Main reason currently adding this is for the WWV(B/H) capability to sync the PC's clock via
+tuning to WWV(B/H) - not sure if WWVB currenly works but I'm planning on adding it if it
+isn't there already.  Note, some items are stubbed as the time sync feature was my main
+reason for doing this plus having something that runs on the Atlas-Bus based OpenHPSDR rigs.
+The 'spot' menu is 'hidden' - not on purpose - it's just where this is right now - between
+the Collapse and RA items on the main menu bar.  If you get an exception, just hit continue -
+that's one of the current side-effects of me stubbing out come code (that I will fix as
+time permits hopefully).
 
 Read the RealeaseNotes.md for more information.
 
