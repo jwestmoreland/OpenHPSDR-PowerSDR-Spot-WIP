@@ -11611,7 +11611,7 @@ namespace PowerSDR
                         DB.SaveBandStack("2M", band_2m_index, mode, filter, freq, CTUN, ZoomFactor, CenterFreq);
                     break;
                 case Band.WWV:
-                    if (freq == 2.5 || freq == 5.0 || freq == 10.0 || freq == 15.0 || freq == 20.0)
+                    if (freq == 2.5 || freq == 5.0 || freq == 10.0 || freq == 15.0 || freq == 20.0 || freq == 0.060)
                         DB.SaveBandStack("WWV", band_wwv_index, mode, filter, freq, CTUN, ZoomFactor, CenterFreq);
                     break;
                 case Band.GEN:
@@ -12381,9 +12381,7 @@ namespace PowerSDR
                     return Band.B6M;
                 else if (freq >= 144.0 && freq <= 148.0)
                     return Band.B2M;
-                else if (freq == 2.5 || freq == 5.0 ||
-                    freq == 10.0 || freq == 15.0 ||
-                    freq == 20.0)
+                else if ( (freq == 2.5) || (freq == 5.0) || (freq == 10.0) || (freq == 15.0) || (freq == 20.0) || (freq == 0.060) )
                     return Band.WWV;
                 else
                     return Band.GEN;
@@ -12420,7 +12418,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12452,7 +12450,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12484,7 +12482,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12516,7 +12514,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12548,7 +12546,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12581,7 +12579,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12613,7 +12611,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12646,7 +12644,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 || freq == 8.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12680,7 +12678,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12712,7 +12710,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12744,7 +12742,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12776,7 +12774,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060 )
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12808,7 +12806,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12840,7 +12838,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12872,7 +12870,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12904,7 +12902,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12936,7 +12934,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -12968,7 +12966,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -13000,7 +12998,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;
@@ -13032,7 +13030,7 @@ namespace PowerSDR
                         return Band.B2M;
                     else if (freq == 2.5 || freq == 5.0 ||
                         freq == 10.0 || freq == 15.0 ||
-                        freq == 20.0)
+                        freq == 20.0 || freq == 0.060)
                         return Band.WWV;
                     else
                         return Band.GEN;

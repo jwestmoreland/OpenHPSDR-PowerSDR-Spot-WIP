@@ -26,6 +26,8 @@
 // D = 0.396372 - 22.91327 * cos(g) + 4.02543 * sin(g) - 0.387205 * cos( 2 * g)+
 //   + 0.051967 * sin(2 * g) - 0.154527 * cos( 3 * g) + 0.084798 * sin( 3 * g)
 
+// items that possibly need tuning - especially wih WWVB...
+// #define BCD_FLOOR_TIME_OUT (unsigned int) 5000;		// 5 seconds
 
 //=================================================================
 
@@ -331,12 +333,12 @@ namespace PowerSDR
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SpotControl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SWLbutton = new System.Windows.Forms.Button();
             this.SSBbutton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -599,34 +601,34 @@ namespace PowerSDR
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.OliveDrab;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.OliveDrab;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.Location = new System.Drawing.Point(11, 27);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.Size = new System.Drawing.Size(269, 113);
             this.dataGridView1.TabIndex = 72;
             this.toolTip1.SetToolTip(this.dataGridView1, "Enter DX address : port#\r\nExample:  k1rfi.com:7300\r\n");
@@ -641,34 +643,34 @@ namespace PowerSDR
             this.dataGridView2.AllowUserToResizeColumns = false;
             this.dataGridView2.AllowUserToResizeRows = false;
             this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.OliveDrab;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.OliveDrab;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView2.Location = new System.Drawing.Point(479, 174);
             this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView2.Size = new System.Drawing.Size(254, 94);
             this.dataGridView2.TabIndex = 75;
             this.toolTip1.SetToolTip(this.dataGridView2, "memories");
@@ -820,7 +822,7 @@ namespace PowerSDR
             0});
             this.udDisplayWWV.Location = new System.Drawing.Point(511, 256);
             this.udDisplayWWV.Maximum = new decimal(new int[] {
-            4,
+            5,
             0,
             0,
             0});
@@ -832,11 +834,11 @@ namespace PowerSDR
             this.udDisplayWWV.Name = "udDisplayWWV";
             this.udDisplayWWV.Size = new System.Drawing.Size(39, 20);
             this.udDisplayWWV.TabIndex = 91;
-            this.toolTip1.SetToolTip(this.udDisplayWWV, "If you check the \"use WWV HF\" Box:\r\nSelect a WWV station with a stron non-fading " +
-        "signal.\r\nUsually 10mhz and 15mhz are the cleanest signals\r\n1=2.5mhz \r\n2=5.0mhz\r\n" +
-        "3=10.0mhz\r\n4=15.0mhz\r\n\r\n");
+            this.toolTip1.SetToolTip(this.udDisplayWWV, "If you check the \"use WWV HF\" Box:\r\nSelect a WWV station with a strong non-fading " +
+        "signal.\r\nUsually 10mhz and 15mhz are the cleanest signals.\r\n1=2.5mhz \r\n2=5.0mhz\r\n" +
+        "3=10.0mhz\r\n4=15.0mhz\r\n5= 60.0khz\n\r\n");
             this.udDisplayWWV.Value = new decimal(new int[] {
-            3,
+            2,
             0,
             0,
             0});
@@ -946,8 +948,8 @@ namespace PowerSDR
             this.udDisplayLong.Size = new System.Drawing.Size(62, 20);
             this.udDisplayLong.TabIndex = 80;
             this.toolTip1.SetToolTip(this.udDisplayLong, "Enter Longitude in deg (-180 to 180) for Beam Heading\r\n- for West of 0 GMT line\r\n" +
-        "+ for East of 0 GMT line\r\n\r\nLeft Click on PowerSDR Display and Hit SHIFT key to \r\n" +
-        "toggle Lat/Long map");
+        "+ for East of 0 GMT line\r\n\r\nLeft Click on PowerSDR Display and Hit SHIFT key to " +
+        "\r\ntoggle Lat/Long map");
             this.udDisplayLong.Value = new decimal(new int[] {
             0,
             0,
@@ -979,8 +981,8 @@ namespace PowerSDR
             this.udDisplayLat.Size = new System.Drawing.Size(58, 20);
             this.udDisplayLat.TabIndex = 79;
             this.toolTip1.SetToolTip(this.udDisplayLat, "Enter Latitude in deg (90 to -90) for Beam Heading\r\n+ for Northern Hemisphere\r\n- " +
-        "for Southern Hemisphere\r\n\r\nLeft Click on PowerSDR Display and Hit SHIFT key to \r\nt" +
-        "oggle Lat/Long map");
+        "for Southern Hemisphere\r\n\r\nLeft Click on PowerSDR Display and Hit SHIFT key to \r" +
+        "\ntoggle Lat/Long map");
             this.udDisplayLat.Value = new decimal(new int[] {
             0,
             0,
@@ -8274,14 +8276,11 @@ namespace PowerSDR
         } // btnTime_Click
 
 
-
-
-
         //====================================================================================================================
         //====================================================================================================================
-
-        double[] WWV_Freq = { 2.500100, 5.000100, 10.000100, 15.000100 };  // listen to 100hz tone
-        double[] WWV_Freq1 = { 2.5, 5.0, 10.0, 15.0 };                     // listen to 1000khz tone
+	// WIP to add WWVB --- aj6bc
+        double[] WWV_Freq = { 2.500100, 5.000100, 10.000100, 15.000100, 0.060000 };  // listen to 100hz tone
+        double[] WWV_Freq1 = { 2.5, 5.0, 10.0, 15.0, 0.060 };                     // listen to 1000khz tone
 
         public bool WTime = false;
      
@@ -8322,7 +8321,6 @@ namespace PowerSDR
         unsafe private void WWVTime()
         {
 
-
          //   timeProcPeriodic = new TimeProc(TimerPeriodicEventCallback);
          //   setup_timer(1000);
 
@@ -8337,7 +8335,6 @@ namespace PowerSDR
             beacon66 = console.BlockSize1;          // get blocksize (must be 2048 during wwv bcd read)
 
          //   beacon55 = console.CATPreamp;
-
 
             oldSR = console.SampleRateRX1;            // get SR
 
@@ -8395,7 +8392,8 @@ namespace PowerSDR
 
               //  console.CATPreamp = PreampMode.OFF;
 
-                console.RX1DSPMode = DSPMode.USB;
+///		console.RX1DSPMode = DSPMode.USB;
+		console.RX1DSPMode = DSPMode.AM;
                 beacon89a = console.RX1Filter;           // get filter name so you can restore
 
                 console.RX1Filter = Filter.VAR1;
@@ -8405,11 +8403,8 @@ namespace PowerSDR
                 textBox1.Text += "Tone detection. Waiting for Start of Minute!\r\n";
 
                 console.VFOAFreq = WWV_Freq1[(int)udDisplayWWV.Value - 1];         // main receiver: WWV in DIGU mode on  sub-Carrier
-
-              
+            
             }
-
-
           
             console.UpdateDisplay();
 
@@ -8434,8 +8429,7 @@ namespace PowerSDR
                   
             int BCDSignalON = 0;           // BCD data steam high dbm signal found initially
             int BCDSignalOFF = 0;           // BCD data steam high dbm signal found initially
-
-      
+    
 
             double BCDAdj = 3;                // % adjustment to what it determined to be the High signal
             int BCDCount = 0;              // counter for the % adjustment
@@ -8510,7 +8504,10 @@ namespace PowerSDR
             }
 
 
-            while ( ST.ElapsedMilliseconds < 1300)                          // get floor for bcd stream
+//	    while ( ST.ElapsedMilliseconds < 1300)                          // get floor for bcd stream
+
+//	    while ( ST.ElapsedMilliseconds < BCD_FLOOR_TIME_OUT)  // get floor for bcd stream
+	    while ( ST.ElapsedMilliseconds < 5000)                          // get floor for bcd stream
             {
 
                 if (WWVPitch == false)  // signal strength based detected
@@ -8592,7 +8589,8 @@ namespace PowerSDR
                         BCDSignalON1 = BCDSignal;                            // finding the ON state of this bcd stream area if the WWV signal
                     }
 
-                    if (ST.ElapsedMilliseconds > 1300)
+//		    if (ST.ElapsedMilliseconds > 1300)
+		    if (ST.ElapsedMilliseconds > 2500)
                     {
                         CarrierSignalINIT = CarrierSignal;
                         BCDSignalOFF = BCDSignalOFF1;
@@ -8660,7 +8658,8 @@ namespace PowerSDR
                     }
 
 
-                    if (ST.ElapsedMilliseconds > 1300)
+//		    if (ST.ElapsedMilliseconds > 1300)
+		    if (ST.ElapsedMilliseconds > 2500)
                     {
 
                         BCDSignalON = BCDSignalON1;
@@ -8706,9 +8705,6 @@ namespace PowerSDR
                     WWVThreshold = (int)((double)BCDSignalON / BCDAdj);          // 33% of full scale adjust the threshold based on the last seconds ON/OFF dBm values
 
                 } // WWVPitch == true (pitch detection)
-
-
-
 
                 //------------------------------------------------------
                 //------------------------------------------------------
@@ -9238,9 +9234,6 @@ namespace PowerSDR
 
         }
 
-
-
-
         double sPrev = 0.0;
         double sPrev2 = 0.0;
 
@@ -9268,7 +9261,6 @@ namespace PowerSDR
         }
 
 */
-
 
         //========================================================================================
         public void GoertzelCoef( double freq, int SIGNAL_SAMPLE_RATE)
