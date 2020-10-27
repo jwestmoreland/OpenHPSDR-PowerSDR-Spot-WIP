@@ -53063,7 +53063,8 @@ namespace PowerSDR
         private string serverPath1;       // for Space weather
 
         public Mutex WWV_mutex = new Mutex();
-        public float[] WWV_data = new float[16384];          //  used to get out_l_ptr1 audio stream in 2048 pieces at a time
+	public float[] WWV_data = new float[16384];          //  used to get out_l_ptr1 audio stream in 2048 pieces at a time
+//	public float[] WWV_data = new float[49152];          //  used to get out_l_ptr1 audio stream in 2048 pieces at a time
         public int WWVframeCount = 0;
         public int WWV_Count = 0;
         public int WWVTone = 0;                             // Magnetude of the Tone received in audio.cs routine
@@ -53553,7 +53554,83 @@ namespace PowerSDR
             else f -= f % mult;
             rf_freq = (double)f * 1e-6;
             VFOAFreq = rf_freq;
-        }
+	}
+
+	double sPrev = 0.0;
+	double sPrev2 = 0.0;
+
+
+	//================================================================================================
+	//================================================================================================
+	// ke9ns add to detect single Frequecy tones in a data stream  (audio.cs routine uses for wwv)
+	// spotform.GoertzelCoef to get Coeff value 
+	//  BEACON: GoertzelCoef(600.0, console.SampleRate1);  // comes up with the Coeff values for the freq and sample rate used
+	//  WWV: GoertzelCoef(100.0, console.SampleRate1);  // comes up with the Coeff values for the freq and sample rate used
+
+	public int Goertzel(float[] samples, int start, int end)
+	{
+
+		sPrev = 0.0;
+		sPrev2 = 0.0;
+
+		for (int i = start; i < end; i++)   // feedback
+		{
+			double s = samples[i] + SpotForm.Coeff * sPrev - sPrev2; // 
+			sPrev2 = sPrev;
+			sPrev = s;
+
+		} // for loop
+
+		double power = (sPrev2 * sPrev2) + (sPrev * sPrev) - ((SpotForm.Coeff * sPrev) * sPrev2);  // feedforward
+
+		return (int)power; // magnitude of frequency in question within the stream
+
+
+	} //  Goertzel
+
+
+	//----------------------------------------------------------------------
+	public int Goertzel2(float[] samples, int start, int end)
+	{
+		sPrev = 0.0;
+		sPrev2 = 0.0;
+
+		for (int i = start; i < end; i++)   // feedback
+		{
+			double s = samples[i] + SpotForm.Coeff2 * sPrev - sPrev2; // 
+			sPrev2 = sPrev;
+			sPrev = s;
+		}
+
+		double power = (sPrev2 * sPrev2) + (sPrev * sPrev) - ((SpotForm.Coeff2 * sPrev) * sPrev2);  // feedforward
+
+		return (int)power; // magnitude of frequency in question within the stream
+	} //  Goertzel
+
+
+
+	/*
+	public double goertzel(List<double> sngData, long N, float frequency, int samplerate)
+	{
+	double skn, skn1, skn2;
+	skn = skn1 = skn2 = 0;
+	samplerate = this.sampleRate;
+	frequency = this.freq;
+
+	double c = 2 * pi * frequency / samplerate;
+	double cosan = Math.Cos(c);
+
+	for (int i = 0; i < N; i++)
+	{
+	skn2 = skn1;
+	skn1 = skn;
+	skn = 2 * cosan * skn1 - skn2 + sngData[i];
+	}
+
+	return skn - Math.Exp(-c) * skn1;
+	}
+*/
+	
 
       }   // end console class
 

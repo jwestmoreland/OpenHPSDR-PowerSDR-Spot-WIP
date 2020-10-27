@@ -851,6 +851,8 @@ namespace PowerSDR
 								10.000000, 10.000000, "WWV",					false,
 								15.000000, 15.000000, "WWV",					false,
 								20.000000, 20.000000, "WWV",					false,
+								25.000000, 25.000000, "WWV",					false,
+								0.0600000, 0.0600000, "WWVB",					false,
                                 3.330000, 3.330000, "CHU",                      false,
                                 7.850000, 7.850000, "CHU",                      false,
                                 14.670000, 14.670000, "CHU",                    false,
@@ -2422,7 +2424,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F7", 5.000000, false, 150, 0.0,
                                 "WWV", "SAM", "F7", 10.000000, false, 150, 0.0,
                                 "WWV", "SAM", "F7", 15.000000, false, 150, 0.0,
-                                "WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+				"WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+				"WWV", "SAM", "F7", 25.000000, false, 150, 0.0,
+				"WWVB", "SAM", "F7", 0.0600000, false, 150, 0.0,			///***
                                 "GEN", "SAM", "F5", 13.845000, false, 150, 0.0,
                                 "GEN", "SAM", "F5", 9.550000, false, 150, 0.0,
                                 "GEN", "SAM", "F5", 5.975000, false, 150, 0.0,
@@ -2565,6 +2569,8 @@ namespace PowerSDR
 								"WWV", "SAM", "F7", 10.000000, false, 150, 0.0,
 								"WWV", "SAM", "F7", 15.000000, false, 150, 0.0,
 								"WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+								"WWV", "SAM", "F7", 25.000000, false, 150, 0.0,
+								"WWVB", "SAM", "F7", 0.0600000, false, 150, 0.0,		///***+++
 								"GEN", "SAM", "F6", 13.845000, false, 150, 0.0,
 								"GEN", "SAM", "F7", 5.975000, false, 150, 0.0,
 								"GEN", "SAM", "F7", 9.550000, false, 150, 0.0,
@@ -2656,7 +2662,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F7", 5.000000, false, 150, 0.0,
                                 "WWV", "SAM", "F7", 10.000000, false, 150, 0.0,
                                 "WWV", "SAM", "F7", 15.000000, false, 150, 0.0,
-                                "WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+				"WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+				"WWV", "SAM", "F7", 25.000000, false, 150, 0.0,
+				"WWVB", "SAM", "F7", 0.0600000, false, 150, 0.0,
                                 "GEN", "SAM", "F5", 13.845000, false, 150, 0.0,
                                 "GEN", "SAM", "F5", 9.550000, false, 150, 0.0,
                                 "GEN", "SAM", "F5", 5.975000, false, 150, 0.0,
@@ -2750,6 +2758,8 @@ namespace PowerSDR
 								"WWV", "SAM", "F7", 10.000000, false, 150, 0.0,
 								"WWV", "SAM", "F7", 15.000000, false, 150, 0.0,
 								"WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+								"WWV", "SAM", "F7", 25.000000, false, 150, 0.0,
+								"WWVB", "SAM", "F7", 0.060000, false, 150, 0.0,
 								"GEN", "SAM", "F5", 13.845000, false, 150, 0.0,
 								"GEN", "SAM", "F5", 9.550000, false, 150, 0.0,
                                 "GEN", "SAM", "F5", 5.975000, false, 150, 0.0,
@@ -2848,6 +2858,8 @@ namespace PowerSDR
 								"WWV", "SAM", "F7", 10.000000, false, 150, 0.0,
 								"WWV", "SAM", "F7", 15.000000, false, 150, 0.0,
 								"WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+								"WWV", "SAM", "F7", 25.000000, false, 150, 0.0,
+								"WWVB", "SAM", "F7", 0.0600000, false, 150, 0.0,
 								"GEN", "SAM", "F6", 13.845000, false, 150, 0.0,
 								"GEN", "SAM", "F7", 5.975000, false, 150, 0.0,
 								"GEN", "SAM", "F7", 9.550000, false, 150, 0.0,
@@ -2938,7 +2950,9 @@ namespace PowerSDR
                                 "WWV", "SAM", "F7", 5.000000, false, 150, 0.0,
                                 "WWV", "SAM", "F7", 10.000000, false, 150, 0.0,
                                 "WWV", "SAM", "F7", 15.000000, false, 150, 0.0,
-                                "WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+				"WWV", "SAM", "F7", 20.000000, false, 150, 0.0,
+				"WWV", "SAM", "F7", 25.000000, false, 150, 0.0,
+				"WWVB", "SAM", "F7", 0.0600000, false, 150, 0.0,
                                 "GEN", "SAM", "F6", 13.845000, false, 150, 0.0,
                                 "GEN", "SAM", "F7", 5.975000, false, 150, 0.0,
                                 "GEN", "SAM", "F7", 9.550000, false, 150, 0.0,
@@ -7294,7 +7308,7 @@ namespace PowerSDR
 									 "15M", "12M", "10M", "6M", "2M", "WWV", "GEN",
 									 "VHF0", "VHF1", "VHF2", "VHF3", "VHF4", "VHF5",
 									 "VHF6", "VHF7", "VHF8", "VHF9", "VHF10", "VHF11",
-									 "VHF12", "VHF13" };
+									 "VHF12", "VHF13", "WWVB" };
 
             int[] retvals = new int[band_list.Length];
 

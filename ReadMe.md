@@ -13,6 +13,7 @@ Latest Test Release v3.6.0 Oct. 26, 2020
 - The 'spot' menu is visible now on the main toolbar.  If you get an exception while running,
 - that's one of the current side-effects of me stubbing out code (that I will fix as
 - time permits hopefully).
+- Also - it appears the audio data stream is incorrect - this is a debug version right now.
 
  -> Read the ReleaseNotes.md for more information.
 

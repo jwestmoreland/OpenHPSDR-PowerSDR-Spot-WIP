@@ -822,7 +822,7 @@ namespace PowerSDR
             0});
             this.udDisplayWWV.Location = new System.Drawing.Point(511, 256);
             this.udDisplayWWV.Maximum = new decimal(new int[] {
-            5,
+            7,
             0,
             0,
             0});
@@ -834,9 +834,7 @@ namespace PowerSDR
             this.udDisplayWWV.Name = "udDisplayWWV";
             this.udDisplayWWV.Size = new System.Drawing.Size(39, 20);
             this.udDisplayWWV.TabIndex = 91;
-            this.toolTip1.SetToolTip(this.udDisplayWWV, "If you check the \"use WWV HF\" Box:\r\nSelect a WWV station with a strong non-fading " +
-        "signal.\r\nUsually 10mhz and 15mhz are the cleanest signals.\r\n1=2.5mhz \r\n2=5.0mhz\r\n" +
-        "3=10.0mhz\r\n4=15.0mhz\r\n5= 60.0khz\n\r\n");
+            this.toolTip1.SetToolTip(this.udDisplayWWV, resources.GetString("udDisplayWWV.ToolTip"));
             this.udDisplayWWV.Value = new decimal(new int[] {
             2,
             0,
@@ -1299,10 +1297,6 @@ namespace PowerSDR
 
         } //initializecomponents
 
-
-
-
-
         #endregion
 
         #region Properties
@@ -1416,8 +1410,8 @@ namespace PowerSDR
             this.Hide();
             e.Cancel = true;
             Common.SaveForm(this, "SpotForm");
-
-            console.DXMemList.Save1(); // save dx spotter list
+// FIXME:
+//            console.DXMemList.Save1(); // save dx spotter list
 
 
 
@@ -3561,7 +3555,7 @@ namespace PowerSDR
 
                                 }
 
-                                if ((r1.IsMatch(us2)))
+                                if (r1.IsMatch(us2))
                                 {
                                      Debug.WriteLine("bypass4 " + DX_Spotter[DX_Index1]);
                                     continue; // dont show spot if not on the r1 list
@@ -8279,8 +8273,8 @@ namespace PowerSDR
         //====================================================================================================================
         //====================================================================================================================
 	// WIP to add WWVB --- aj6bc
-        double[] WWV_Freq = { 2.500100, 5.000100, 10.000100, 15.000100, 0.060000 };  // listen to 100hz tone
-        double[] WWV_Freq1 = { 2.5, 5.0, 10.0, 15.0, 0.060 };                     // listen to 1000khz tone
+        double[] WWV_Freq = { 2.500100, 5.000100, 10.000100, 15.000100, 20.000100, 25.000100, 0.060000 };  // listen to 100hz tone
+        double[] WWV_Freq1 = { 2.5, 5.0, 10.0, 15.0, 20.0, 25.0, 0.060 };                     // listen to 1000khz tone
 
         public bool WTime = false;
      
@@ -8301,10 +8295,11 @@ namespace PowerSDR
         public int indexP = 0;  // P frame index (with 10 seconds inside it)
         public int indexS = 0; // seconds index inside a P frame
 
-        public int oldSR = 48000;     // to store original SR
+///	public int oldSR = 48000;     // to store original SR
+	public int oldSR = 96000;     // to store original SR
+//	public int oldSR = 192000;     // to store original SR
 
         public bool WWVPitch = true;   // true = use pitch detection, false = use signal strength
-
 
         private void TimerPeriodicEventCallback(int id, int msg, int user, int param1, int param2)
         {
@@ -8336,6 +8331,10 @@ namespace PowerSDR
 
          //   beacon55 = console.CATPreamp;
 
+/// fixme:::
+	    console.SampleRateRX1 = 96000;
+
+	    
             oldSR = console.SampleRateRX1;            // get SR
 
             if (checkBoxTone.Checked == true)    // this would allow you to select the signal strength based detection instead of Pitch(tone) based detection. For experimenting
@@ -8350,8 +8349,8 @@ namespace PowerSDR
           // REDUCE SAMPLERATE (until I can figure out why I cant make it work at 192k)
             if (oldSR == 192000)  // need to reduce the 192SR because the Tone detection needs a longer sample time to detect weak signals at 192k and 2048 buffer size limit
             {
-                console.SetupForm.comboAudioSampleRate1.Text = "96000"; // select 96000
-                
+		    console.SetupForm.comboAudioSampleRate1.Text = "96000"; // select 96000
+//		    console.SetupForm.comboAudioSampleRate1.Text = "192000"; // select 96000
             }
           
             textBox2.Text = "";
@@ -8360,24 +8359,29 @@ namespace PowerSDR
             // MAX OUT AUDIO BUFFER SIZE
             if (console.BlockSize1 != 2048) console.BlockSize1 = 2048;  // need the largest buffer size for the Tone detection to work.
 
-
-            Debug.WriteLine("WWV>>0");
+            Debug.WriteLine("WWVdbg>>0");
 
             // SETUP UP TONE DETECTION TO CATCH SUB-CARRIER
             GoertzelCoef(100.0, console.SampleRateRX1);  // comes up with the Coeff values for the freq and sample rate used
 
-
             // SET MODE, THEN 
             if (WWVPitch == false)
             {
-	    console.RX1DSPMode = DSPMode.CWU;
-///	    console.RX1DSPMode = DSPMode.DIGU;
+//	    console.RX1DSPMode = DSPMode.CWU;
+		    console.RX1DSPMode = DSPMode.DIGU;
+		    console.RX2DSPMode = DSPMode.DIGU;
+
+/// fixme:::
+///	    console.SampleRateRX2 = 96000;
+	    
                 beacon89a = console.RX1Filter;           // get filter name so you can restore
 
-                console.RX1Filter = Filter.VAR1;
+		console.RX1Filter = Filter.VAR1;
+		console.RX2Filter = Filter.VAR1;
 
-///		console.UpdateRX1Filters(-30, 30);
-		console.UpdateRX1Filters(-150, 150);
+		console.UpdateRX1Filters(-30, 30);
+		console.UpdateRX2Filters(-30, 30);
+//		console.UpdateRX1Filters(-150, 150);
 
                 textBox1.Text += "Signal Strength detection. Waiting for Start of Minute!\r\n";
 
@@ -8385,7 +8389,6 @@ namespace PowerSDR
 
                 console.chkEnableMultiRX.Checked = true;  // enable sub receiver
                 console.VFOBFreq = WWV_Freq1[(int)udDisplayWWV.Value - 1];       // WWV in CWU mode will center on 5000 khz
-
          
             }
             else
@@ -8394,15 +8397,17 @@ namespace PowerSDR
 
               //  console.CATPreamp = PreampMode.OFF;
 
-///		console.RX1DSPMode = DSPMode.USB;
+		console.RX1DSPMode = DSPMode.USB;
 //		console.RX1DSPMode = DSPMode.DIGU;
-		console.RX1DSPMode = DSPMode.AM;
+//		console.RX1DSPMode = DSPMode.AM;
                 beacon89a = console.RX1Filter;           // get filter name so you can restore
 
                 console.RX1Filter = Filter.VAR1;
 
 ///		console.UpdateRX1Filters(70, 170);
-		console.UpdateRX1Filters(-30, 2500);
+//		console.UpdateRX1Filters(60, 150);
+		console.UpdateRX1Filters(10, 200);
+//		console.UpdateRX1Filters(-30, 2500);
 
                 textBox1.Text += "Tone detection. Waiting for Start of Minute!\r\n";
 
@@ -8453,7 +8458,6 @@ namespace PowerSDR
             int newDay2 = 0;  // p4
             int newDay = 0;  // p3 + p4
 
-
             int BCD1 = 0; // false BCD value detected as (0), true BCD value detected as (1)   [for this last second]
 
             bool WWVStart = false; // true = got start of minute frame
@@ -8473,9 +8477,7 @@ namespace PowerSDR
 
             Debug.WriteLine("WWV>>1"); 
 
-
             ST.Restart();
-
 
             while (ST.ElapsedMilliseconds < 2000)    // wait for things to calm down after you make changes to the mode
             {
@@ -8493,8 +8495,57 @@ namespace PowerSDR
             BCDCount = 0;
             BCDAdj = 0;
             
-            Debug.WriteLine("WWV>>2");
+	    Debug.WriteLine("WWV>>2");
+/// fixme:::	    issue with audio datastream pipeline for wwv data
+#if false
+	  // first make a copy of the audio stream into WWVP buffer
+	    fixed (float* WWVP = &console.WWV_data[console.WWVframeCount]) // 2048 readings per frame (console.Blocksize1 = main audio,  Blocksize2 = vac)
+	    {
+		    Win32.memcpy(WWVP, Audio.G_OUT_L_PTR1, Audio.Frame_Count * sizeof(float));  // dest, source  # of bytes to copy 2048 float sized bytes
+	    }
 
+// #endif
+            if (console.SampleRate1 == 192000)
+	    {
+		    // 1024 buffer @ 192k = 0.0000053 sec per scan (5mSec) or at 2048 (10mSec)
+		    console.WWVTone = console.Goertzel(console.WWV_data, 0, Audio.Frame_Count); // console.WWVframeCount   determine the magnitude of the 100hz TONE in the sample
+		    console.WWVReady = true;
+
+
+	    }
+	    else // if SR !=192k
+	    {
+		    //  CWKeyer.AudioLatency = Math.Max(10.0, new_size / (double)console.SampleRate1 * 1e3); // found in setup.cs program
+
+		    // 1024 buffer @ 96k = 0.0000106 sec per scan (10mSec)  or at 2048  (20mSec)
+
+		    //   console.WWVTone = console.Goertzel(console.WWV_data, 0, frameCount); // determine the magnitude of the 100hz TONE in the sample
+		    //  console.WWVReady = true;
+		    //  console.WWV_Count = 0;
+		    //  console.WWVframeCount = 0;
+
+		    if (console.WWV_Count == 1) // WWV sets buffer to 2048 and SR to 96k = 21mSec * 3 = 65mSec)
+		    {
+
+			    console.WWVTone = console.Goertzel(console.WWV_data, 0, console.WWVframeCount); // determine the magnitude of the 100hz TONE in the sample
+
+			    console.WWVframeCount = 0;
+			    console.WWVReady = true;
+			    console.WWV_Count = 0;
+
+		    }
+		    else
+		    {
+
+			    console.WWV_Count++;
+			    console.WWVframeCount = (Audio.Frame_Count * console.WWV_Count);  // keep increasing the size of the wwvframecount to give Goertzel a larger sample size
+
+		    }
+
+	    }
+///fixme:::
+#endif
+	    
             //------------------------------------------------------------------
           
             ST.Restart();
@@ -8506,12 +8557,60 @@ namespace PowerSDR
                 BCDSignalOFF1 = 0;
                 BCDSignalON1 = -150;
             }
+/// fixme:::	    
+#if true
+	  // first make a copy of the audio stream into WWVP buffer
+	    fixed (float* WWVP = &console.WWV_data[console.WWVframeCount]) // 2048 readings per frame (console.Blocksize1 = main audio,  Blocksize2 = vac)
+	    {
+		    Win32.memcpy(WWVP, Audio.G_OUT_L_PTR1, Audio.Frame_Count * sizeof(float));  // dest, source  # of bytes to copy 2048 float sized bytes
+	    }
+
+// #endif
+            if (console.SampleRate1 == 192000)
+	    {
+		    // 1024 buffer @ 192k = 0.0000053 sec per scan (5mSec) or at 2048 (10mSec)
+		    console.WWVTone = console.Goertzel(console.WWV_data, 0, Audio.Frame_Count); // console.WWVframeCount   determine the magnitude of the 100hz TONE in the sample
+		    console.WWVReady = true;
 
 
-//	    while ( ST.ElapsedMilliseconds < 1300)                          // get floor for bcd stream
+	    }
+	    else // if SR !=192k
+	    {
+		    //  CWKeyer.AudioLatency = Math.Max(10.0, new_size / (double)console.SampleRate1 * 1e3); // found in setup.cs program
+
+		    // 1024 buffer @ 96k = 0.0000106 sec per scan (10mSec)  or at 2048  (20mSec)
+
+		    //   console.WWVTone = console.Goertzel(console.WWV_data, 0, frameCount); // determine the magnitude of the 100hz TONE in the sample
+		    //  console.WWVReady = true;
+		    //  console.WWV_Count = 0;
+		    //  console.WWVframeCount = 0;
+
+		    if (console.WWV_Count == 1) // WWV sets buffer to 2048 and SR to 96k = 21mSec * 3 = 65mSec)
+		    {
+
+			    console.WWVTone = console.Goertzel(console.WWV_data, 0, console.WWVframeCount); // determine the magnitude of the 100hz TONE in the sample
+
+			    console.WWVframeCount = 0;
+			    console.WWVReady = true;
+			    console.WWV_Count = 0;
+
+		    }
+		    else
+		    {
+
+			    console.WWV_Count++;
+			    console.WWVframeCount = (Audio.Frame_Count * console.WWV_Count);  // keep increasing the size of the wwvframecount to give Goertzel a larger sample size
+
+		    }
+
+	    }
+///fixme:::
+#endif
+
+	    while ( ST.ElapsedMilliseconds < 1300)                          // get floor for bcd stream
 
 //	    while ( ST.ElapsedMilliseconds < BCD_FLOOR_TIME_OUT)  // get floor for bcd stream
-	    while ( ST.ElapsedMilliseconds < 5000)                          // get floor for bcd stream
+//	    while ( ST.ElapsedMilliseconds < 5000)                          // get floor for bcd stream
             {
 
                 if (WWVPitch == false)  // signal strength based detected
@@ -8539,7 +8638,6 @@ namespace PowerSDR
                     }
 
                 }
-
 
             } // for loop 1.3 seconds to test levels
 
@@ -8593,8 +8691,8 @@ namespace PowerSDR
                         BCDSignalON1 = BCDSignal;                            // finding the ON state of this bcd stream area if the WWV signal
                     }
 
-//		    if (ST.ElapsedMilliseconds > 1300)
-		    if (ST.ElapsedMilliseconds > 2500)
+		    if (ST.ElapsedMilliseconds > 1300)
+//		    if (ST.ElapsedMilliseconds > 2500)
                     {
                         CarrierSignalINIT = CarrierSignal;
                         BCDSignalOFF = BCDSignalOFF1;
@@ -8604,10 +8702,9 @@ namespace PowerSDR
                         BCDSignalOFF1 = 0;           // RESET BCD data steam low dbm signal found while running
                         ST.Restart();
 
-                        //   textBox1.Text += "WWV BCD Data stream: (0)= " + BCDSignalOFF + "dBm, (1)= " + BCDSignalON + "dBm @ Carrier Level: " + CarrierSignal + "dBm\r\n";
+                           textBox1.Text += "WWV BCD Data stream: (0)= " + BCDSignalOFF + "dBm, (1)= " + BCDSignalON + "dBm @ Carrier Level: " + CarrierSignal + "dBm\r\n";
 
                     }
-
 
                     if ((uint)(BCDSignalON - BCDSignalOFF) < 6) // if you loose the carrier, then NO GOOD
                     {
@@ -8644,7 +8741,7 @@ namespace PowerSDR
                     {
                         BCDSignal = console.WWVTone;  // get Magnitude value from audio.cs and Goertzel routine
 
-                      //  Debug.WriteLine("WWVTONE: " + ST2.ElapsedMilliseconds + " , "+BCDSignal);
+                        Debug.WriteLine("WWVTONE: " + ST2.ElapsedMilliseconds + " , "+BCDSignal);
 
                       //  ST2.Restart();
 
@@ -8661,9 +8758,8 @@ namespace PowerSDR
                         BCDSignalON1 = BCDSignal;  // get maximum magnitude
                     }
 
-
-//		    if (ST.ElapsedMilliseconds > 1300)
-		    if (ST.ElapsedMilliseconds > 2500)
+		    if (ST.ElapsedMilliseconds > 1300)
+//		    if (ST.ElapsedMilliseconds > 2500)
                     {
 
                         BCDSignalON = BCDSignalON1;
@@ -8673,7 +8769,7 @@ namespace PowerSDR
 
                         ST.Restart();
 
-                        //   Debug.WriteLine("WWV>>  Highest BCD Mag: " + BCDSignalON  );          // adjust the threshold based on the last seconds ON/OFF dBm values
+                           Debug.WriteLine("WWV>>  Highest BCD Mag: " + BCDSignalON  );          // adjust the threshold based on the last seconds ON/OFF dBm values
 
                     }
 
@@ -8709,7 +8805,7 @@ namespace PowerSDR
                     WWVThreshold = (int)((double)BCDSignalON / BCDAdj);          // 33% of full scale adjust the threshold based on the last seconds ON/OFF dBm values
 
                 } // WWVPitch == true (pitch detection)
-
+	//	Debug.WriteLine("WWV>>4");
                 //------------------------------------------------------
                 //------------------------------------------------------
                 //------------------------------------------------------
@@ -8741,8 +8837,6 @@ namespace PowerSDR
                             BCDSignalON = BCDSignalON1;  // tone should be on here always since its the start of every second (tick) (we just need to know how long it lasts)
                             BCDSignalON1 = 0;         // RESET BCD data steam high dbm signal found while running
                         }
-
-
 
                         if (indexS == 10) // 9, 19,29,39, etc
                         {
@@ -8779,11 +8873,9 @@ namespace PowerSDR
 
                    } // if (WWVNewTime.ElapsedMilliseconds >= ( 230 + (indexS + (indexP*10))*1000 )   ) 
 
-
                     //--------------------------------------------------------------
                     //--------------------------------------------------------------
                     //--------------------------------------------------------------
-
 
                    // if (indexP == 5)
                     if ((indexP == 4) && (indexS > 3))
@@ -8810,7 +8902,6 @@ namespace PowerSDR
                         else // no faults detected in PCM BCD data stream
                         {
 
-
                             newMinutes = (P[1, 0] * 1) + (P[1, 1] * 2) + (P[1, 2] * 4) + (P[1, 3] * 8) + (P[1, 5] * 10) + (P[1, 6] * 20) + (P[1, 7] * 40);     // WWV reported UTC minutes
                             newHours = (P[2, 0] * 1) + (P[2, 1] * 2) + (P[2, 2] * 4) + (P[2, 3] * 8) + (P[2, 5] * 10) + (P[2, 6] * 20);                        // WWV reported UTC hour
 
@@ -8818,7 +8909,6 @@ namespace PowerSDR
                             newDay2 = (P[4, 0] * 100) + (P[4, 1] * 200);
 
                             newDay = newDay1 + newDay2;                                                                                                        // WWV reported UTC day of the year
-
 
                             Debug.WriteLine("UTC Hours: " + newHours);
                             Debug.WriteLine("UTC Min: " + newMinutes);
@@ -8868,10 +8958,8 @@ namespace PowerSDR
                             //-------------------------------------
                             // now computer real time and save it.
                             textBox1.Text += "IMPORTANT: Your PC Time will NOT update unless PowerSDR is launched in ADMIN mode!!!!" + "\r\n";
-
                            
                             DateTime startDT = DateTime.Now;   // get current PC time and date
- 
 
                             DialogResult temp0 = MessageBox.Show("You must be running in ADMIN mode to set your PC Clock.\r\nYour Current LOCAL Date time: " + startDT.ToString("yy-MM-dd HH:mm:ss.fff") +
                                 "\r\nDoes this UTC Time (below) look Correct?\r\nDo You Want to Update Your PC Clock?\r\n" +
@@ -8908,18 +8996,14 @@ namespace PowerSDR
 
                             }
 
-
                         } // NO faults detected in PCM BCD data stream
 
                     } // indexP == 3 (got the hours and minutes)
 
-
-
                 } //if (WWVStart == true) 
-
+	//	Debug.WriteLine("WWV>>5");
                 EXITOUT:
-
-
+	//	Debug.WriteLine("WWV>>6");
                 //---------------------------------------------------------------
                 //---------------------------------------------------------------
                 // use Threshold to check 100hz subcarrier for BCD data stream
@@ -9012,9 +9096,7 @@ namespace PowerSDR
                             }
                         }
 
-
                     } // BCDONTrig == true
-
 
                 } //  if (WWVStart == true)
                 else   // do below only to find HOLE(SYNC) to start minute
@@ -9174,8 +9256,7 @@ namespace PowerSDR
                 Thread.Sleep(1);
 
             } // while(WTime == true)
-
-
+//	    Debug.WriteLine("WWV>>7");
             //---------------------------------------------------------------
             //---------------------------------------------------------------
             // DONE WITH WWV THREAD HERE
@@ -9184,9 +9265,7 @@ namespace PowerSDR
 
             Debug.WriteLine("WWV Time Thread Ended ");
 
-
             checkBoxWWV.Checked = false; // turn off WWV checking
-
          
                 if (oldSR == 192000)  // 192kSR will not work so reduce to 96k
                 {
@@ -9195,7 +9274,6 @@ namespace PowerSDR
                 }
 
                 console.chkEnableMultiRX.Checked = false;  // enable sub receiver
-
          
             textBox2.Text = "";
             checkBoxTone.Checked = false;   // turn off tone marker when done.
@@ -9216,7 +9294,7 @@ namespace PowerSDR
             console.UpdateDisplay();
 
             WWVNewTime.Stop();
-
+//	    Debug.WriteLine("WWV>>8");
         } // WWVTime()
 
         private void checkBoxWWV_CheckedChanged(object sender, EventArgs e)
@@ -9243,7 +9321,11 @@ namespace PowerSDR
 
         double normalizedfreq = 0.0;
         public double Coeff = 0.0;
+	public double Coeff2 = 0.0; // used for mark/space freq
+	public double CoeffB = 0.0;
+	public double Coeff2B = 0.0;
 
+	
         /*
         //================================================================================================
         // ke9ns add to detect single Frequecy tones in a data stream
@@ -9266,13 +9348,30 @@ namespace PowerSDR
 
 */
 
-        //========================================================================================
+	//========================================================================================
+	
         public void GoertzelCoef( double freq, int SIGNAL_SAMPLE_RATE)
         {
    
             normalizedfreq = freq / SIGNAL_SAMPLE_RATE;
-            Coeff = 2 * Math.Cos(2 * Math.PI * normalizedfreq);
-        }
+	    Coeff = 2 * Math.Cos(2 * Math.PI * normalizedfreq);
+	    CoeffB = Math.Exp(-2 * Math.PI * normalizedfreq);
+
+	    Debug.WriteLine("COEFF= " + Coeff + ", freq= " + freq);
+	}
+
+	public void GoertzelCoef2(double freq, int SIGNAL_SAMPLE_RATE)
+	{
+
+		normalizedfreq = freq / SIGNAL_SAMPLE_RATE;
+		Coeff2 = 2 * Math.Cos(2 * Math.PI * normalizedfreq);
+		Coeff2B = Math.Exp(-2 * Math.PI * normalizedfreq);
+
+		Debug.WriteLine("COEFF2= " + Coeff2 + ", freq2= " + freq);
+
+	}
+
+	
 
         private void checkBoxTone_CheckedChanged(object sender, EventArgs e)
         {

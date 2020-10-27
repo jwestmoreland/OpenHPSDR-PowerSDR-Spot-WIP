@@ -166,6 +166,20 @@ Sync up your PC clock time to NIST.
 Use this feature before running a Beacon Scan,
 or before running WJST (JT65) or WSPR digital modes</value>
   </data>
+  <data name="udDisplayWWV.ToolTip" xml:space="preserve">
+    <value>If you check the "use WWV HF" Box:
+Select a WWV station with a strong non-fading signal.
+Usually 10mhz and 15mhz are the cleanest signals.
+1=2.5mhz 
+2=5.0mhz
+3=10.0mhz
+4=15.0mhz
+5= 20.0mhz
+6= 25.0mhz
+7= 60.0khz
+
+</value>
+  </data>
   <data name="checkBoxWWV.ToolTip" xml:space="preserve">
     <value>Check this box, then Click  on "Time Sync"
 
