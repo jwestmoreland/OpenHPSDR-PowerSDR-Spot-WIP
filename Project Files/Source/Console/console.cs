@@ -2409,6 +2409,8 @@ namespace PowerSDR
             this.eSCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.collapseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spotterMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.RAtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.linearityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displayControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.topControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bandControlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -2507,8 +2509,6 @@ namespace PowerSDR
             this.bIN2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RX2AVGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RX2PeakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.linearityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.RAtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerNotchZoom = new System.Windows.Forms.Timer(this.components);
             this.picRX2Squelch = new System.Windows.Forms.PictureBox();
             this.panelRX2RF = new System.Windows.Forms.PanelTS();
@@ -5226,12 +5226,24 @@ namespace PowerSDR
             // 
             // spotterMenu
             // 
-//            this.spotterMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-//            this.toolStripTextBox1});
             this.spotterMenu.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.spotterMenu.Name = "spotterMenu";
             resources.ApplyResources(this.spotterMenu, "spotterMenu");
             this.spotterMenu.Click += new System.EventHandler(this.spotterMenu_Click);
+            // 
+            // RAtoolStripMenuItem
+            // 
+            this.RAtoolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.RAtoolStripMenuItem.Name = "RAtoolStripMenuItem";
+            resources.ApplyResources(this.RAtoolStripMenuItem, "RAtoolStripMenuItem");
+            this.RAtoolStripMenuItem.Click += new System.EventHandler(this.RAtoolStripMenuItem_Click);
+            // 
+            // linearityToolStripMenuItem
+            // 
+            this.linearityToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.linearityToolStripMenuItem.Name = "linearityToolStripMenuItem";
+            resources.ApplyResources(this.linearityToolStripMenuItem, "linearityToolStripMenuItem");
+            this.linearityToolStripMenuItem.Click += new System.EventHandler(this.linearityToolStripMenuItem_Click);
             // 
             // displayControlsToolStripMenuItem
             // 
@@ -5919,20 +5931,6 @@ namespace PowerSDR
             this.RX2PeakToolStripMenuItem.Name = "RX2PeakToolStripMenuItem";
             resources.ApplyResources(this.RX2PeakToolStripMenuItem, "RX2PeakToolStripMenuItem");
             this.RX2PeakToolStripMenuItem.Click += new System.EventHandler(this.mnuDSPRX2_Click);
-            // 
-            // linearityToolStripMenuItem
-            // 
-            this.linearityToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.linearityToolStripMenuItem.Name = "linearityToolStripMenuItem";
-            resources.ApplyResources(this.linearityToolStripMenuItem, "linearityToolStripMenuItem");
-            this.linearityToolStripMenuItem.Click += new System.EventHandler(this.linearityToolStripMenuItem_Click);
-            // 
-            // RAtoolStripMenuItem
-            // 
-            this.RAtoolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.RAtoolStripMenuItem.Name = "RAtoolStripMenuItem";
-            resources.ApplyResources(this.RAtoolStripMenuItem, "RAtoolStripMenuItem");
-            this.RAtoolStripMenuItem.Click += new System.EventHandler(this.RAtoolStripMenuItem_Click);
             // 
             // timerNotchZoom
             // 
@@ -7733,7 +7731,6 @@ namespace PowerSDR
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Console";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Console_Closing);
-//            this.Load += new System.EventHandler(this.Console_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Console_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Console_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Console_KeyUp);

@@ -10,8 +10,7 @@ Latest Test Release v3.6.0 Oct. 26, 2020
 - Setting PC Clock via Internet seems to be working - but needs verification to be sure.
 - Note, some items are stubbed as the time sync feature was my main
 - reason for doing this plus having something that runs on the Atlas-Bus based OpenHPSDR rigs.
-- The 'spot' menu is 'hidden' - not on purpose - it's just where this is right now - between
-- the Collapse and RA items on the main menu bar.  If you get an exception, just hit continue -
+- The 'spot' menu is visible now on the main toolbar.  If you get an exception while running,
 - that's one of the current side-effects of me stubbing out code (that I will fix as
 - time permits hopefully).
 
