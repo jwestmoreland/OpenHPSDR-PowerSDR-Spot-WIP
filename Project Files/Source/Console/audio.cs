@@ -531,11 +531,18 @@ namespace PowerSDR
         private static int frameCount;
 
 	unsafe private static float* out_l_ptr1;
-	
+    unsafe private static float* in_l_ptr1;
+
         unsafe public static float* G_OUT_L_PTR1
         {
 		get { return (float*) out_l_ptr1; }
 		set { out_l_ptr1 = value; }
+        }
+	
+        unsafe public static float* G_IN_L_PTR1
+        {
+		get { return (float*) in_l_ptr1; }
+		set { in_l_ptr1 = value; }
         }
 
 
@@ -1151,7 +1158,7 @@ namespace PowerSDR
         {
 
 
-            Frame_Count = frameCount;
+///            Frame_Count = frameCount;
 #if(TIMER)
 			t1.Start();
 #endif
@@ -1165,7 +1172,8 @@ namespace PowerSDR
 
             float* in_l = null, in_r = null, out_l = null, out_r = null;
 
-	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_IN_L_PTR1 = in_l_ptr1;
 	    
             in_l = in_l_ptr1;
             in_r = in_r_ptr1;
@@ -1377,7 +1385,9 @@ namespace PowerSDR
                     #endregion
 
 #if(MINMAX)
-					Debug.Write(MaxSample(in_l, in_r, frameCount).ToString("f6")+",");
+///		    Debug.Write("1\r\n");
+		    Debug.Write(MaxSample(in_l, in_r, frameCount).ToString("f6")+",");
+		    
 #endif
 
                     if (vac_enabled && vac_output_iq &&
@@ -1420,7 +1430,8 @@ namespace PowerSDR
                     }
 
 #if(MINMAX)
-					Debug.WriteLine(MaxSample(out_l, out_r, frameCount));
+///		    Debug.Write("2\r\n");
+		    Debug.WriteLine(MaxSample(out_l, out_r, frameCount));
 #endif
 
                     #region Output Signal Source
@@ -1543,7 +1554,7 @@ namespace PowerSDR
                     }
                 }
 	    }
-	    
+#if false	    
 	    //--------------------------------------------------------------
             // ke9ns add  comes here every 42msec @ 48kSR with 4096 Buffer size
 //	    if (console.BeaconSigAvg == true) // true = beacon scan on or wwv time reading
@@ -1561,10 +1572,7 @@ namespace PowerSDR
             Debug.WriteLine("WWV-AudT1");
 
             } //   if (console.BeaconSigAvg == true)
-
-	   
-
-	    
+#endif	    
             // scale output for VAC -- use input as spare buffer
             if (vac_enabled && !vac_output_iq &&
                 rb_vacIN_l != null && rb_vacIN_r != null &&
@@ -1656,7 +1664,8 @@ namespace PowerSDR
             }
 
 #if(MINMAX)
-			Debug.Write(MaxSample(out_l, out_r, frameCount).ToString("f6")+",");
+///		    Debug.Write("3\r\n");
+		    Debug.Write(MaxSample(out_l, out_r, frameCount).ToString("f6")+",");
 
 			float current_max = MaxSample(out_l, out_r, frameCount);
 			if(current_max > max) max = current_max;
@@ -1721,12 +1730,13 @@ namespace PowerSDR
         }
         
         //Callback for HPSDR
-        //private static int count = 0;
+	//private static int count = 0;
+	/// THIS CALLBACK!
         unsafe public static int Callback3Port(void* input, void* output, int frameCount,
                                                PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
 	{
 
-            Frame_Count = frameCount;
+///            Frame_Count = frameCount;
 		
 #if(TIMER)
 			t1.Start();
@@ -1778,7 +1788,8 @@ namespace PowerSDR
             float* out_l_ptr4 = (float*)array_ptr_output[6]; //CallbackOutL3bufp 
 	    float* out_r_ptr4 = (float*)array_ptr_output[7]; //CallbackOutR3bufp
 
-	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_IN_L_PTR1 = in_l_ptr1;
 	    
 
             rx1_out_l = (float*)array_ptr_output[0]; //CallbackMonOutLbufp
@@ -2186,7 +2197,9 @@ namespace PowerSDR
                 }
             }
 
+// !!!!:::: here -> this callback - callback3 - non-ambiguous, right???    
 #if(MINMAX)
+///		    Debug.Write("4\r\n");
 					Debug.Write(MaxSample(in_l, in_r, frameCount).ToString("f6")+",");
 #endif
 
@@ -2565,6 +2578,8 @@ namespace PowerSDR
                 dspExchange(ex_input, ex_output, out_count);
             }
 #if(MINMAX)
+///	    		    Debug.Write("5\r\n");
+
 			Debug.Write(MaxSample(out_l_ptr2, frameCount).ToString("f6")+",");
 			Debug.Write(MaxSample(out_r_ptr2, frameCount).ToString("f6")+"\n");
 #endif
@@ -2594,7 +2609,73 @@ namespace PowerSDR
                     DoScope2(tx_out_r, out_count);
                 }
             }
-            
+	    //--------------------------------------------------------------
+            // ke9ns add  comes here every 42msec @ 48kSR with 4096 Buffer size
+//	    if (console.BeaconSigAvg == true) // true = beacon scan on or wwv time reading
+	    if ( console.WWW_disambigutron == true )		// for which audio.cs callback to use
+	    {
+#if false
+	    fixed (float* WWVP = &console.WWV_data[0]) // set the address of WWVP to WWV_data[0]  (since memcpy wont work on console.wwv_data directly  4096 readings per frame
+ 	    {
+	           Win32.memcpy(WWVP, out_l_ptr1, frameCount * sizeof(float));  // dest,source  # of bytes to copy 2048 float sized bytes
+//                 Debug.WriteLine("WWV-AudT0");
+            }
+
+		    console.WWVTone = console.Goertzel(console.WWV_data, 0, frameCount); // determine the magnitude of the 100hz TONE in the sample
+		    console.WWVReady = true;
+		    console.WWV_Count = 0;
+		    // Debug.WriteLine("WWV-AudT1");
+#endif
+	     // first make a copy of the audio stream into WWVP buffer
+	    fixed (float* WWVP = &console.WWV_data[console.WWVframeCount]) // 2048 readings per frame (console.Blocksize1 = main audio,  Blocksize2 = vac)
+	    {
+		    Win32.memcpy(WWVP, out_l_ptr1, frameCount * sizeof(float));  // dest, source  # of bytes to copy 2048 float sized bytes
+///		    Debug.WriteLine("WWV-Aud4");
+	    }
+
+
+	    if (console.SampleRate1 == 192000)
+	    {
+		    // 1024 buffer @ 192k = 0.0000053 sec per scan (5mSec) or at 2048 (10mSec)
+		    console.WWVTone = console.Goertzel(console.WWV_data, 0, frameCount); // console.WWVframeCount   determine the magnitude of the 100hz TONE in the sample
+		    console.WWVReady = true;
+//		    Debug.WriteLine("WWV-Aud5");
+
+	    }
+	    else // if SR !=192k
+	    {
+		    //  CWKeyer.AudioLatency = Math.Max(10.0, new_size / (double)console.SampleRate1 * 1e3); // found in setup.cs program
+
+		    // 1024 buffer @ 96k = 0.0000106 sec per scan (10mSec)  or at 2048  (20mSec)
+
+		    //   console.WWVTone = console.Goertzel(console.WWV_data, 0, frameCount); // determine the magnitude of the 100hz TONE in the sample
+		    //  console.WWVReady = true;
+		    //  console.WWV_Count = 0;
+		    //  console.WWVframeCount = 0;
+
+		    if (console.WWV_Count == 1) // WWV sets buffer to 2048 and SR to 96k = 21mSec * 3 = 65mSec)
+		    {
+
+			    console.WWVTone = console.Goertzel(console.WWV_data, 0, console.WWVframeCount); // determine the magnitude of the 100hz TONE in the sample
+
+			    console.WWVframeCount = 0;
+			    console.WWVReady = true;
+			    console.WWV_Count = 0;
+//			    Debug.WriteLine("WWV-Aud6");
+		    }
+		    else
+		    {
+
+			    console.WWV_Count++;
+			    console.WWVframeCount = (frameCount * console.WWV_Count);  // keep increasing the size of the wwvframecount to give Goertzel a larger sample size
+//			    Debug.WriteLine("WWV-Aud7");
+		    }
+
+
+
+	    }
+    } // if console.WWW_disambigutron = false;		// for which audio.cs callback to use
+           
             if (wave_record)
             {
                 if (!localmox)
@@ -3212,6 +3293,7 @@ namespace PowerSDR
  
 
 #if(MINMAX)
+///		    Debug.Write("6\r\n");
 			Debug.Write(MaxSample(out_l2, out_r2, frameCount).ToString("f6")+",");
 
 			float current_max = MaxSample(out_l2, out_r2, frameCount);
@@ -3235,7 +3317,7 @@ namespace PowerSDR
                                                PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
 	{
 
-		            Frame_Count = frameCount;
+///		            Frame_Count = frameCount;
 
 #if(TIMER)
 			t1.Start();
@@ -3257,7 +3339,8 @@ namespace PowerSDR
             float* out_l_ptr2 = (float*)array_ptr_output[2];
             float* out_r_ptr2 = (float*)array_ptr_output[3];
 
-	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_IN_L_PTR1 = in_l_ptr1;
 
 	    
             // arrange input buffers in the following order:
@@ -3611,6 +3694,8 @@ namespace PowerSDR
                     #endregion
 
 #if(MINMAX)
+///		    		    Debug.Write("7\r\n");
+
 					Debug.Write(MaxSample(in_l, in_r, frameCount).ToString("f6")+",");
 #endif
 
@@ -3618,7 +3703,9 @@ namespace PowerSDR
                     dspExchange(ex_input, ex_output, frameCount);
 
 #if(MINMAX)
-					Debug.Write(MaxSample(out_l_ptr1, out_r_ptr1, frameCount).ToString("f6")+",");
+///		    Debug.Write("8\r\n");
+
+		    Debug.Write(MaxSample(out_l_ptr1, out_r_ptr1, frameCount).ToString("f6")+",");
 #endif
 
                     #region Output Signal Source
@@ -4216,6 +4303,8 @@ namespace PowerSDR
             }
 
 #if(MINMAX)
+///	    		    Debug.Write("9\r\n");
+
 			Debug.Write(MaxSample(out_l2, out_r2, frameCount).ToString("f6")+",");
 
 			float current_max = MaxSample(out_l2, out_r2, frameCount);
@@ -4240,7 +4329,7 @@ namespace PowerSDR
                                            PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
 	{
 
-            Frame_Count = frameCount;
+///            Frame_Count = frameCount;
 		
 #if(TIMER)
 			t1.Start();
@@ -4276,7 +4365,8 @@ namespace PowerSDR
             var out_l_ptr4 = (float*)array_ptr_output[6];
             var out_r_ptr4 = (float*)array_ptr_output[7];
 
-	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_IN_L_PTR1 = in_l_ptr1;
 
 	    
             // arrange input buffers in the following order:
@@ -4780,6 +4870,8 @@ namespace PowerSDR
                     #endregion
 
 #if(MINMAX)
+///		    		    Debug.Write("10\r\n");
+
     /*float local_max = MaxSample(in_l, in_r, frameCount);
 					if(local_max > max)
 					{
@@ -4845,6 +4937,8 @@ namespace PowerSDR
                     }
 
 #if(MINMAX)
+///		    		    Debug.Write("11\r\n");
+
 					Debug.Write(MaxSample(out_l_ptr2, frameCount).ToString("f6")+",");
 					Debug.Write(MaxSample(out_r_ptr2, frameCount).ToString("f6")+"\n");
 #endif
@@ -5020,7 +5114,7 @@ namespace PowerSDR
                 }
             }
 
-
+#if false
 	     // first make a copy of the audio stream into WWVP buffer
 	    fixed (float* WWVP = &console.WWV_data[console.WWVframeCount]) // 2048 readings per frame (console.Blocksize1 = main audio,  Blocksize2 = vac)
 	    {
@@ -5069,7 +5163,7 @@ namespace PowerSDR
 
 
 	    }
-
+#endif
 
             out_l1 = rx1_out_l;
             out_r1 = rx1_out_r;
@@ -5270,6 +5364,8 @@ namespace PowerSDR
             }
 
 #if(MINMAX)
+///	    		    Debug.Write("12\r\n");
+
             /*Debug.Write(MaxSample(out_l2, out_r2, frameCount).ToString("f6")+",");
 
 			float current_max = MaxSample(out_l2, out_r2, frameCount);
@@ -5297,7 +5393,7 @@ namespace PowerSDR
             PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
 	{
 
-           Frame_Count = frameCount;
+///           Frame_Count = frameCount;
 
             if (!vac_enabled) return 0;
 
@@ -5310,7 +5406,8 @@ namespace PowerSDR
             float* out_r_ptr1 = null;
             if (vac_stereo || vac_output_iq) out_r_ptr1 = (float*)array_ptr[1];
 
-	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_IN_L_PTR1 = in_l_ptr1;
 
 	    
             if (varsampEnabledVAC1)
@@ -5619,7 +5716,7 @@ namespace PowerSDR
             PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
 	{
 
-           Frame_Count = frameCount;
+///           Frame_Count = frameCount;
 
             if (!vac2_enabled) return 0;
 
@@ -5632,7 +5729,8 @@ namespace PowerSDR
             float* out_r_ptr1 = null;
             if (vac2_stereo || vac2_output_iq) out_r_ptr1 = (float*)array_ptr[1];
 
-	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_OUT_L_PTR1 = out_l_ptr1;
+///	    G_IN_L_PTR1 = in_l_ptr1;
 
 	    
             if (varsampEnabledVAC2)
@@ -5939,7 +6037,7 @@ namespace PowerSDR
         unsafe public static int Pipe(void* input, void* output, int frameCount,
             PA19.PaStreamCallbackTimeInfo* timeInfo, int statusFlags, void* userData)
 	{
-            Frame_Count = frameCount;
+///            Frame_Count = frameCount;
 
 		
             float** inptr = (float**)input;

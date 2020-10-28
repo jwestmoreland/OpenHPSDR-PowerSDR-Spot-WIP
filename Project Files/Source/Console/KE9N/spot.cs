@@ -8273,7 +8273,7 @@ namespace PowerSDR
         //====================================================================================================================
         //====================================================================================================================
 	// WIP to add WWVB --- aj6bc
-        double[] WWV_Freq = { 2.500100, 5.000100, 10.000100, 15.000100, 20.000100, 25.000100, 0.060000 };  // listen to 100hz tone
+        double[] WWV_Freq = { 2.500100, 5.000100, 10.000100, 15.000100, 20.000100, 25.000100, 0.060100 };  // listen to 100hz tone
         double[] WWV_Freq1 = { 2.5, 5.0, 10.0, 15.0, 20.0, 25.0, 0.060 };                     // listen to 1000khz tone
 
         public bool WTime = false;
@@ -8299,7 +8299,7 @@ namespace PowerSDR
 	public int oldSR = 96000;     // to store original SR
 //	public int oldSR = 192000;     // to store original SR
 
-        public bool WWVPitch = true;   // true = use pitch detection, false = use signal strength
+	public bool WWVPitch = true;   // true = use pitch detection, false = use signal strength
 
         private void TimerPeriodicEventCallback(int id, int msg, int user, int param1, int param2)
         {
@@ -8333,8 +8333,8 @@ namespace PowerSDR
 
 /// fixme:::
 	    console.SampleRateRX1 = 96000;
+        console.WWW_disambigutron = true;       // for which audio.cs callback to use
 
-	    
             oldSR = console.SampleRateRX1;            // get SR
 
             if (checkBoxTone.Checked == true)    // this would allow you to select the signal strength based detection instead of Pitch(tone) based detection. For experimenting
@@ -8406,7 +8406,7 @@ namespace PowerSDR
 
 ///		console.UpdateRX1Filters(70, 170);
 //		console.UpdateRX1Filters(60, 150);
-		console.UpdateRX1Filters(10, 200);
+		console.UpdateRX1Filters(30, 1230);
 //		console.UpdateRX1Filters(-30, 2500);
 
                 textBox1.Text += "Tone detection. Waiting for Start of Minute!\r\n";
@@ -8558,11 +8558,12 @@ namespace PowerSDR
                 BCDSignalON1 = -150;
             }
 /// fixme:::	    
-#if true
+#if false
 	  // first make a copy of the audio stream into WWVP buffer
 	    fixed (float* WWVP = &console.WWV_data[console.WWVframeCount]) // 2048 readings per frame (console.Blocksize1 = main audio,  Blocksize2 = vac)
 	    {
 		    Win32.memcpy(WWVP, Audio.G_OUT_L_PTR1, Audio.Frame_Count * sizeof(float));  // dest, source  # of bytes to copy 2048 float sized bytes
+//		    Win32.memcpy(WWVP, Audio.G_IN_L_PTR1, Audio.Frame_Count * sizeof(float));  // dest, source  # of bytes to copy 2048 float sized bytes
 	    }
 
 // #endif
@@ -8589,7 +8590,7 @@ namespace PowerSDR
 		    {
 
 			    console.WWVTone = console.Goertzel(console.WWV_data, 0, console.WWVframeCount); // determine the magnitude of the 100hz TONE in the sample
-
+			    console.WWVTone2 = console.Goertzel2(console.WWV_data, 0, console.WWVframeCount); // determine the magnitude of the 100hz TONE in the sample
 			    console.WWVframeCount = 0;
 			    console.WWVReady = true;
 			    console.WWV_Count = 0;
@@ -9266,6 +9267,7 @@ namespace PowerSDR
             Debug.WriteLine("WWV Time Thread Ended ");
 
             checkBoxWWV.Checked = false; // turn off WWV checking
+	    console.WWW_disambigutron = false;		// for which audio.cs callback to use
          
                 if (oldSR == 192000)  // 192kSR will not work so reduce to 96k
                 {

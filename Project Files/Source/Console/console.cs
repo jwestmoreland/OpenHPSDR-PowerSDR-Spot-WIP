@@ -53067,12 +53067,14 @@ namespace PowerSDR
 //	public float[] WWV_data = new float[49152];          //  used to get out_l_ptr1 audio stream in 2048 pieces at a time
         public int WWVframeCount = 0;
         public int WWV_Count = 0;
-        public int WWVTone = 0;                             // Magnetude of the Tone received in audio.cs routine
+	public int WWVTone = 0;                             // Magnetude of the Tone received in audio.cs routine
+	public int WWVTone2 = 0;                             // Magnetude of the Tone received in audio.cs routine
         public bool WWVReady = false;                       // let you know when a new magnetude is updated
         public Stopwatch WWVST = new Stopwatch();
         public float[] wwvbuf = new float[Display.BUFFER_SIZE];
         public int wwvVal = -300;
-
+	public bool WWW_disambigutron = false;			// flag for some of the senseless callback decodes --- aj6bc
+	
 
         //=========================================================================================
         //=========================================================================================
