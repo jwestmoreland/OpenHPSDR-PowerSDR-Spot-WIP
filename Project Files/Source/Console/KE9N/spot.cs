@@ -8300,6 +8300,7 @@ namespace PowerSDR
 //	public int oldSR = 192000;     // to store original SR
 
 	public bool WWVPitch = true;   // true = use pitch detection, false = use signal strength
+//	public bool WWVPitch = false;   // true = use pitch detection, false = use signal strength
 
         private void TimerPeriodicEventCallback(int id, int msg, int user, int param1, int param2)
         {
@@ -8332,19 +8333,22 @@ namespace PowerSDR
          //   beacon55 = console.CATPreamp;
 
 /// fixme:::
-	    console.SampleRateRX1 = 96000;
+	console.SampleRateRX1 = 96000;
         console.WWW_disambigutron = true;       // for which audio.cs callback to use
 
             oldSR = console.SampleRateRX1;            // get SR
 
             if (checkBoxTone.Checked == true)    // this would allow you to select the signal strength based detection instead of Pitch(tone) based detection. For experimenting
             {
-          //      WWVPitch = false;
+                WWVPitch = false;
             }
             else
             {
                 WWVPitch = true;  // only allow Pitch (tone) detection
-            }
+
+	    }
+///fixme:::
+///	    WWVPitch = false;  // only allow Pitch (tone) detection
 
           // REDUCE SAMPLERATE (until I can figure out why I cant make it work at 192k)
             if (oldSR == 192000)  // need to reduce the 192SR because the Tone detection needs a longer sample time to detect weak signals at 192k and 2048 buffer size limit
@@ -8406,13 +8410,24 @@ namespace PowerSDR
 
 ///		console.UpdateRX1Filters(70, 170);
 //		console.UpdateRX1Filters(60, 150);
-		console.UpdateRX1Filters(30, 1230);
+///		console.UpdateRX1Filters(80, 140);
+//		console.UpdateRX1Filters(30, 1230);
 //		console.UpdateRX1Filters(-30, 2500);
 
                 textBox1.Text += "Tone detection. Waiting for Start of Minute!\r\n";
 
                 console.VFOAFreq = WWV_Freq1[(int)udDisplayWWV.Value - 1];         // main receiver: WWV in DIGU mode on  sub-Carrier
-            
+
+		if ( console.VFOAFreq == 0.060 )
+		{
+	//		console.UpdateRX1Filters(-50, 50);
+			console.UpdateRX1Filters(80, 140);
+		}
+		else
+		{
+			console.UpdateRX1Filters(80, 140);
+		}
+		
             }
           
             console.UpdateDisplay();
@@ -8742,7 +8757,15 @@ namespace PowerSDR
                     {
                         BCDSignal = console.WWVTone;  // get Magnitude value from audio.cs and Goertzel routine
 
-                        Debug.WriteLine("WWVTONE: " + ST2.ElapsedMilliseconds + " , "+BCDSignal);
+                        if (BCDSignal > WWVThreshold)
+                        {  // Debug.WriteLine("WWVTONE: " + BCDSignal + " , " + WWVThreshold+" , " + BCDSignalON + " , " + BCDSignalON1 + " , " + checkBoxTone.Checked);
+                            Debug.WriteLine("WWVTONE: " + BCDSignal);
+
+                        }
+                        else if (BCDSignal > 50)
+				Debug.WriteLine("                                WWVTONE: " + BCDSignal);
+			
+///                        Debug.WriteLine("WWVTONE: " + ST2.ElapsedMilliseconds + " , "+BCDSignal);
 
                       //  ST2.Restart();
 
@@ -8770,7 +8793,7 @@ namespace PowerSDR
 
                         ST.Restart();
 
-                           Debug.WriteLine("WWV>>  Highest BCD Mag: " + BCDSignalON  );          // adjust the threshold based on the last seconds ON/OFF dBm values
+///                          Debug.WriteLine("WWV>>  Highest BCD Mag: " + BCDSignalON  );          // adjust the threshold based on the last seconds ON/OFF dBm values
 
                     }
 
@@ -8802,7 +8825,7 @@ namespace PowerSDR
                         WWVCF = 0;
                     }
 
-                    BCDAdj = 3.0;
+///                    BCDAdj = 3.0;
                     WWVThreshold = (int)((double)BCDSignalON / BCDAdj);          // 33% of full scale adjust the threshold based on the last seconds ON/OFF dBm values
 
                 } // WWVPitch == true (pitch detection)
@@ -9106,7 +9129,8 @@ namespace PowerSDR
                     {
                         checkBoxTone.Checked = true;
                         below_count = 0;
-                        BCDMax = BCDSignal;
+			BCDMax = BCDSignal;
+			BCDAdj = 2.8;
 
                         tickOFF.Stop();
 
@@ -9132,7 +9156,7 @@ namespace PowerSDR
                         {
                             checkBoxTone.Checked = false;
                             BCDMin = BCDSignal;
-
+			    BCDAdj = 3;
                             tickON.Stop();
 
                             if (BCD1timeFlag == true)
@@ -9306,8 +9330,9 @@ namespace PowerSDR
                 WTime = false; // if you turn off checkbox, then shut down thread
                 WWVNewTime.Stop();
                 indexP = 0;     // reset data to catch next minute data stream
-                indexS = 0;
-               
+		indexS = 0;
+		console.WWW_disambigutron = false;		// for which audio.cs callback to use
+             
             }
 
         }
