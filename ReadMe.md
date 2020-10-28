@@ -6,7 +6,7 @@ Latest Test Release v3.6.0 Oct. 26, 2020
 - Debug version of 'Spot' feature developed by KE9NS:  
 
 - Main reason currently adding this is for the WWV(B/H) capability to sync the PC's clock via
-- tuning to WWV(B/H) - WWVB tuning has been added (option 5 currently) but needs work still.
+- tuning to WWV(B/H) - WWVB tuning has been added (option 7 currently) but needs work still.
 - Setting PC Clock via Internet seems to be working - but needs verification to be sure.
 - Note, some items are stubbed as the time sync feature was my main
 - reason for doing this plus having something that runs on the Atlas-Bus based OpenHPSDR rigs.
@@ -14,6 +14,7 @@ Latest Test Release v3.6.0 Oct. 26, 2020
 - that's one of the current side-effects of me stubbing out code (that I will fix as
 - time permits hopefully).
 - Also - it appears the audio data stream is incorrect - this is a debug version right now.
+- 20MHz and 25MHz have been added to WWV list box choices.
 
  -> Read the ReleaseNotes.md for more information.
 
