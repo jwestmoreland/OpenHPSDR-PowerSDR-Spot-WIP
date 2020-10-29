@@ -567,7 +567,6 @@ top1:
                 jnz top1
         }
 
-
 #else
         unsigned char *p;
         unsigned char tmp;

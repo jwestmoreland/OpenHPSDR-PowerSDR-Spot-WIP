@@ -528,6 +528,8 @@ namespace PowerSDR
         private static bool localmox;
 
         private static int empty_buffers;
+        
+#if false        
         private static int frameCount;
 
 	unsafe private static float* out_l_ptr1;
@@ -551,7 +553,7 @@ namespace PowerSDR
             get { return frameCount; }
             set { frameCount = value;  }
         }
-
+#endif
         public static int EmptyBuffers
         {
             get { return empty_buffers; }

@@ -166,6 +166,25 @@ Sync up your PC clock time to NIST.
 Use this feature before running a Beacon Scan,
 or before running WJST (JT65) or WSPR digital modes</value>
   </data>
+  <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>114, 17</value>
+  </metadata>
+  <data name="checkBoxToneMag.ToolTip" xml:space="preserve">
+    <value>Check this box to use Magnitude vs. Tone for
+detection of WWV decoded time messages.
+
+Select this before selecting Use WWV HF above if you 
+want to use Magnitude of the signal vs. Tone.
+
+Time Sync will listen to Radio WWV BCD time code 
+found on a 100hz sub-carrier.
+
+Will not work well in noisy conditions or low signal,
+Until I can use a PLL to detect weak signals.
+
+Reception will start on the WWV minute 1khz tone.
+</value>
+  </data>
   <data name="udDisplayWWV.ToolTip" xml:space="preserve">
     <value>If you check the "use WWV HF" Box:
 Select a WWV station with a strong non-fading signal.
@@ -199,11 +218,8 @@ higher band: 14.1 -&gt; 18.11 -&gt; 21.15 -&gt; 24.93 -&gt; 28.2
 
 This takes 15 minutes to fully complete</value>
   </data>
-  <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>114, 17</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>95</value>
+    <value>53</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
