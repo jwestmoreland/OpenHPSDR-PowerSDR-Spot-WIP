@@ -16,6 +16,9 @@ Latest Test Release v3.6.0 Oct. 26, 2020
 - Also - it appears the audio data stream is incorrect - this is a debug version right now.
 - 20MHz and 25MHz have been added to WWV list box choices.
 
+- Here's a screenshot of the first WWVB decode attempt even though not quite accurate:
+
+![FIRST-DECODE](https://user-images.githubusercontent.com/2308903/97528483-18035a00-196b-11eb-9947-a7b1ed550a78.jpg)
  -> Read the ReleaseNotes.md for more information.
 
 # 3.4.9 (2018-3-19)
