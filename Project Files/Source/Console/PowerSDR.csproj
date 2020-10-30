@@ -351,25 +351,23 @@
     </Compile>
     <Compile Include="HPSDR\JanusAudio.cs" />
     <Compile Include="HPSDR\JanusAudioImports.cs" />
-    <Compile Include="KE9N\conrec.cs" />
-    <Compile Include="KE9N\Http.cs" />
-    <Compile Include="KE9N\HttpServer\GetTRXParamHandler.cs" />
-    <Compile Include="KE9N\HttpServer\HandlerFactory.cs" />
-    <Compile Include="KE9N\HttpServer\HttpServer.cs" />
-    <Compile Include="KE9N\HttpServer\IHandler.cs" />
-    <Compile Include="KE9N\HttpServer\ImageRequestHandler.cs" />
-    <Compile Include="KE9N\HttpServer\UnknownRequestHandler.cs" />
-    <Compile Include="KE9N\HttpServer\WebPageRequestHandler.cs" />
-    <Compile Include="KE9N\scan.cs">
+    <Compile Include="KE9NS\conrec.cs" />
+    <Compile Include="KE9NS\Http.cs" />
+    <Compile Include="KE9NS\HttpServer\GetTRXParamHandler.cs" />
+    <Compile Include="KE9NS\HttpServer\HandlerFactory.cs" />
+    <Compile Include="KE9NS\HttpServer\HttpServer.cs" />
+    <Compile Include="KE9NS\HttpServer\IHandler.cs" />
+    <Compile Include="KE9NS\HttpServer\ImageRequestHandler.cs" />
+    <Compile Include="KE9NS\HttpServer\UnknownRequestHandler.cs" />
+    <Compile Include="KE9NS\HttpServer\WebPageRequestHandler.cs" />
+    <Compile Include="KE9NS\scan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KE9N\spot.cs">
+    <Compile Include="KE9NS\spot.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="KE9N\spot_options.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KE9N\swl.cs">
+    <Compile Include="KE9NS\spot_options.cs" />
+    <Compile Include="KE9NS\swl.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="keyboard.cs" />
@@ -468,7 +466,6 @@
     <Compile Include="xvtr.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Content Include="KE9N\HttpServer\template.html" />
     <EmbeddedResource Include="alphawarnform.de.resx">
       <DependentUpon>alphawarnform.cs</DependentUpon>
     </EmbeddedResource>
@@ -811,16 +808,16 @@
     <EmbeddedResource Include="InputBox.zh-Hant.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KE9N\scan.resx">
+    <EmbeddedResource Include="KE9NS\scan.resx">
       <DependentUpon>scan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KE9N\spot.resx">
+    <EmbeddedResource Include="KE9NS\spot.resx">
       <DependentUpon>spot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KE9N\spot_options.resx">
+    <EmbeddedResource Include="KE9NS\spot_options.resx">
       <DependentUpon>spot_options.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="KE9N\swl.resx">
+    <EmbeddedResource Include="KE9NS\swl.resx">
       <DependentUpon>swl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="logon.de.resx">
