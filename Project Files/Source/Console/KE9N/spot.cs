@@ -8405,7 +8405,7 @@ namespace PowerSDR
 		console.UpdateRX2Filters(-30, 30);
 //		console.UpdateRX1Filters(-150, 150);
 
-                textBox1.Text += "Signal Strength detection. Waiting for Start of Minute!\r\n";
+console.UpdateRX1Filters(-30, 30);                textBox1.Text += "Signal Strength detection. Waiting for Start of Minute!\r\n";
 
                 console.VFOAFreq = WWV_Freq[(int)udDisplayWWV.Value - 1];         // WWV in CWU mode will center on 5000.1 khz
 
@@ -8438,10 +8438,12 @@ namespace PowerSDR
 
 		if ( console.VFOAFreq == 0.060 )		/// WWVB and WWV BCD weights are reversed
 		{
-			console.UpdateRX1Filters(60, 150);       // 100
+			console.RX1DSPMode = DSPMode.DIGU;
+			console.UpdateRX1Filters(-40, 40);
+//			console.UpdateRX1Filters(60, 150);       // 100
 //			console.UpdateRX1Filters(548, 679);	// 600
 ///			console.VFOAFreq = 0.05990;		// adjust
-///			GoertzelCoef(100.0, console.SampleRateRX1);  // comes up with the Coeff values for the freq and sample rate used
+			GoertzelCoef(1.0, console.SampleRateRX1);  // comes up with the Coeff values for the freq and sample rate used
 	//		console.UpdateRX1Filters(80, 140);
 		}
 		else
